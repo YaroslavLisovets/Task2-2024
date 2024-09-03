@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Students Management</h1>
+
+<h2>Add Student</h2>
+<form id="addStudentForm">
+    <input type="text" id="firstName" placeholder="First Name" required>
+    <input type="text" id="lastName" placeholder="Last Name" required>
+    <input type="text" id="middleName" placeholder="Middle Name">
+    <input type="date" id="birthDate" required>
+    <input type="text" id="groupName" placeholder="Group Name" required>
+    <button type="submit">Add Student</button>
+</form>
+
+<h2>Delete Student</h2>
+<form id="deleteStudentForm">
+    <input type="text" id="id" placeholder="ID" required>
+    <button type="submit">Delete Student</button>
+</form>
+
+<h2>List of Students</h2>
+<button id="loadStudents">Load Students</button>
+<ul id="studentsList"></ul>
+
+<script>
+    $(document).ready(function () {
+        $("#addStudentForm").submit(function (e) {
+            e.preventDefault();
+            const student = {
+                firstName: $("#firstName").val(),
+                lastName: $("#lastName").val(),
+                middleName: $("#middleName").val(),
+                birthDate: $("#birthDate").val(),
+                groupName: $("#groupName").val()
+            };
+
+            $.ajax({
+                url: '/students/add',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(student),
+                success: function (data) {
+                    alert('Student added with ID: ' + data);
+                },
+                error: function () {
+                    alert('Failed to add student');
+                }
+            });
+        });
+
+        $("#deleteStudentForm").submit(function (e) {
+            e.preventDefault();
+            const id = $("#id").val();
+
+            $.ajax({
+                url: '/students/' + id,
+                method: 'DELETE',
+                success: function () {
+                    alert('Student deleted');
+                },
+                error: function () {
+                    alert('Failed to delete student');
+                }
+            });
+        });
+
+        $("#loadStudents").click(function () {
+            $.getJSON('/students/', function (data) {
+                const studentsList = $("#studentsList");
+                studentsList.empty();
+                $.each(data, function (index, student) {
+                    studentsList.append(`<li>${student.firstName} ${student.lastName} (${student.groupName})</li>`);
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>
