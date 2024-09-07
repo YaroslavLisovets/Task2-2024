@@ -6,26 +6,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h1>Students Management</h1>
 
-<h2>Add Student</h2>
+<h2>Добавить студента</h2>
 <form id="addStudentForm">
-    <input type="text" id="firstName" placeholder="First Name" required>
-    <input type="text" id="lastName" placeholder="Last Name" required>
-    <input type="text" id="middleName" placeholder="Middle Name">
+    <input type="text" id="firstName" placeholder="Имя" required>
+    <input type="text" id="lastName" placeholder="Фамилия" required>
+    <input type="text" id="middleName" placeholder="Отчество">
     <input type="date" id="birthDate" required>
-    <input type="text" id="groupName" placeholder="Group Name" required>
-    <button type="submit">Add Student</button>
+    <input type="text" id="groupName" placeholder="Группа" required>
+    <button type="submit">Добавить студента</button>
 </form>
 
-<h2>Delete Student</h2>
+<h2>Удалить студента</h2>
 <form id="deleteStudentForm">
     <input type="text" id="id" placeholder="ID" required>
-    <button type="submit">Delete Student</button>
+    <button type="submit">Удалить студента</button>
 </form>
 
-<h2>List of Students</h2>
-<button id="loadStudents">Load Students</button>
+<h2>Список студентов</h2>
+<button id="loadStudents">Загрузить список студентов</button>
 <ul id="studentsList"></ul>
 
 <script>
@@ -46,10 +45,10 @@
                 contentType: 'application/json',
                 data: JSON.stringify(student),
                 success: function (data) {
-                    alert('Student added with ID: ' + data);
+                    alert('Студент добавлен с ID: ' + data);
                 },
                 error: function () {
-                    alert('Failed to add student');
+                    alert('Не получилось добавить студента');
                 }
             });
         });
@@ -62,10 +61,10 @@
                 url: '/students/' + id,
                 method: 'DELETE',
                 success: function () {
-                    alert('Student deleted');
+                    alert('Студент удалён');
                 },
                 error: function () {
-                    alert('Failed to delete student');
+                    alert('Ошибка при удалении студента');
                 }
             });
         });
